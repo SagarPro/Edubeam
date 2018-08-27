@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/new_leads"
+        android:title="Fetch New Leads"
+        android:icon="@drawable/icon_fetch"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/refresh"
+        android:title="Refresh Leads"
+        android:icon="@drawable/icon_refresh"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/filter"
+        android:title="Agent List"
+        android:icon="@drawable/icon_filter"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+
+</menu>

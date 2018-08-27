@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_border">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lead Details"
+        android:textSize="22sp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/newEnquiry"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/newEnquiry"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/newEnquiry">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:id="@+id/scrollView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/Name"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="10dp"
+                    android:nextFocusUp="@id/etChildName"
+                    android:nextFocusLeft="@id/etChildName"
+                    android:layout_below="@+id/Name"
+                    style="@style/FormEditText"
+                    android:background="@drawable/list_border"
+                    android:id="@+id/etName"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Locality PinCode:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/etName"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/houseLocality"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/houseLocality"
+                    style="@style/FormEditText"
+                    android:background="@drawable/list_border"
+                    android:id="@+id/etHouseLocality"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile No:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/etHouseLocality"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/mobileNumber"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/mobileNumber"
+                    style="@style/FormEditText"
+                    android:background="@drawable/list_border"
+                    android:id="@+id/tvMobileNumber"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Created Date:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/tvMobileNumber"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/createdDate"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/createdDate"
+                    style="@style/FormEditText"
+                    android:background="@drawable/list_border"
+                    android:id="@+id/tvCreatedDate"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email ID:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/tvCreatedDate"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/email"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/email"
+                    style="@style/FormEditText"
+                    android:background="@drawable/list_border"
+                    android:id="@+id/tvParentEmail"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assigned To :"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/tvParentEmail"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/AssignedTo"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/dialog_border"
+                    android:layout_below="@+id/AssignedTo"
+                    android:overlapAnchor="false"
+                    android:id="@+id/spAssignedTo"/>
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lead Stage :"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/tvAssignedTo"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/LeadStage"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/dialog_border"
+                    android:layout_below="@+id/LeadStage"
+                    android:overlapAnchor="false"
+                    android:id="@+id/spLeadStage"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admission for :"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/spLeadStage"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/AdmissionFor"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/dialog_border"
+                    android:layout_below="@+id/AdmissionFor"
+                    android:overlapAnchor="false"
+                    android:id="@+id/spAdmissionFor"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enquiry Type :"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/spAdmissionFor"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/EnquiryType"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/dialog_border"
+                    android:layout_below="@+id/EnquiryType"
+                    android:overlapAnchor="false"
+                    android:id="@+id/spEnquiryType"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How have you come to know about us :"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_below="@id/spEnquiryType"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/HYK"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/dialog_border"
+                    android:layout_below="@+id/HYK"
+                    android:overlapAnchor="false"
+                    android:id="@+id/spHYK"/>-->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/spAssignedTo">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccent"
+                        android:layout_below="@id/rlDetails"
+                        android:background="@color/colorPrimaryDark"
+                        android:id="@+id/btnCCancel"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="edit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccent"
+                        android:layout_below="@id/rlDetails"
+                        android:layout_alignParentEnd="true"
+                        android:background="@color/colorPrimaryDark"
+                        android:id="@+id/btnCEdit"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="save"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccent"
+                        android:layout_below="@id/rlDetails"
+                        android:layout_alignParentEnd="true"
+                        android:background="@color/colorPrimaryDark"
+                        android:id="@+id/btnCSave"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

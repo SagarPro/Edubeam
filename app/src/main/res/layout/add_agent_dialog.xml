@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_border"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Agent"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/rlDetails">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/list_border"
+            android:id="@+id/etAgentName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etAgentName"
+            android:hint="Email Id"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/list_border"
+            android:id="@+id/etAgentEmail"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etAgentEmail"
+            android:hint="Phone Number"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="phone"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/list_border"
+            android:id="@+id/etAgentPhone"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etAgentPhone"
+            android:hint="Password"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/list_border"
+            android:id="@+id/etAgentPassword"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorEmerald"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Create"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/btnCreate"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTab"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Cancel"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/btnCancel"/>
+
+</RelativeLayout>

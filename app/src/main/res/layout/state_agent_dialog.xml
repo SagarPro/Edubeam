@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/dialog_border">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="StateName"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:id="@+id/stateName"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColorHint="@color/textColor"
+        android:inputType="textLongMessage"
+        android:textCursorDrawable="@null"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:background="@drawable/dialog_border"
+        android:layout_below="@+id/stateName"
+        android:overlapAnchor="false"
+        android:id="@+id/spAgent"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spAgent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/rlBottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlue"
+            android:id="@+id/btnCancel"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:visibility="gone"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlue"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btnSave"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlue"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btnEdit"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

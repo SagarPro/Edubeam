@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_border"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_states"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:id="@+id/ivStates"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select User Type"
+        android:textColor="@color/colorBlack"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_add_agent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:id="@+id/ivAddAgent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*press &amp; hold for agent details."
+        android:textSize="12sp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/tvTitle"
+        android:visibility="gone"
+        android:id="@+id/tvNote"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNote"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:dividerHeight="10dp"
+        android:divider="@android:color/transparent"
+        android:elevation="5dp"
+        android:scrollbars="none"
+        android:id="@+id/lvItems"/>
+
+</RelativeLayout>
