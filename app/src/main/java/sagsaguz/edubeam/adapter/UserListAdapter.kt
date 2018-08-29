@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import sagsaguz.edubeam.R
-import sagsaguz.edubeam.utils.CustomerDetailsDO
 import sagsaguz.edubeam.utils.LeadsDO
 import java.util.ArrayList
 

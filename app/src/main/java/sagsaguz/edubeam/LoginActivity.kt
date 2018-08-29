@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         rlLogin = findViewById(R.id.rlLogin)
 
         pbLogin = findViewById(R.id.pbLogin)
-        pbLogin.indeterminateDrawable.setColorFilter(resources.getColor(R.color.colorEmerald), android.graphics.PorterDuff.Mode.MULTIPLY)
+        pbLogin.indeterminateDrawable.setColorFilter(resources.getColor(R.color.colorBlue), android.graphics.PorterDuff.Mode.MULTIPLY)
         pbLogin.visibility = View.GONE
 
         adminPreferences = getSharedPreferences("AdminDetails", Context.MODE_PRIVATE)

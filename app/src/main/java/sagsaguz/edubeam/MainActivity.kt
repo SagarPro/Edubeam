@@ -32,15 +32,17 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
 import com.amazonaws.services.dynamodbv2.model.ScanRequest
 import com.amazonaws.services.dynamodbv2.model.ScanResult
+import com.firebase.jobdispatcher.*
 import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import sagsaguz.edubeam.fragments.PendingList
 import sagsaguz.edubeam.alarm.AlarmReceiver
+import sagsaguz.edubeam.fragments.PendingList
 import sagsaguz.edubeam.fragments.NewList
 import sagsaguz.edubeam.fragments.TodayList
 import sagsaguz.edubeam.fragments.UsersList
+import sagsaguz.edubeam.service.FetchLeadScoreService
 import sagsaguz.edubeam.utils.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -122,12 +124,46 @@ class MainActivity : AppCompatActivity() {
 
         if (adminEmail == Config.SAEMAIL) {
             LeadDetails().execute()
+            val lsPreferences = getSharedPreferences("LeadScores", Context.MODE_PRIVATE)
+            if (lsPreferences.getString("Status", "not") == "updated") {
+                Toast.makeText(baseContext, "Lead Scores are updated", Toast.LENGTH_LONG).show()
+                val prefsEditor = lsPreferences.edit()
+                prefsEditor.putString("Status", "not")
+                prefsEditor.apply()
+            }
+            startService()
         } else {
             LeadByAgentDetails().execute(adminName)
         }
 
         //createStateList()
 
+        //scheduleAlarm()
+
+    }
+
+    private fun startService() {
+        val firebaseJobDispatcher = FirebaseJobDispatcher(GooglePlayDriver(this))
+        val job = firebaseJobDispatcher.newJobBuilder()
+                .setService(FetchLeadScoreService::class.java)
+                .setLifetime(Lifetime.FOREVER)
+                .setRecurring(true)
+                .setTag("1")
+                .setTrigger(Trigger.executionWindow(300, 480))
+                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                .setReplaceCurrent(false)
+                .setConstraints(Constraint.ON_ANY_NETWORK).build()
+        firebaseJobDispatcher.mustSchedule(job)
+    }
+
+    private fun scheduleAlarm(){
+        val time = GregorianCalendar.MILLISECOND + 1*60*1000
+        val intentAlarm = Intent(this, AlarmReceiver::class.java)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time.toLong(), PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT))
+        val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, intentAlarm, 0)
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), time.toLong(), pendingIntent)
+        Toast.makeText(baseContext, "Scheduled", Toast.LENGTH_SHORT).show()
     }
 
     private fun setViewPager(){
@@ -160,10 +196,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        val newLead = menu.findItem(R.id.new_leads)
-        newLead.isVisible = adminEmail == Config.SAEMAIL
+        /*val newLead = menu.findItem(R.id.new_leads)
+        newLead.isVisible = adminEmail == Config.SAEMAIL*/
         val filter = menu.findItem(R.id.filter)
         filter.isVisible = adminEmail == Config.SAEMAIL
+        val updateLeadScores = menu.findItem(R.id.update_lead_scores)
+        updateLeadScores.isVisible = adminEmail == Config.SAEMAIL
         return true
     }
 
@@ -180,6 +218,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.refresh -> {
                 refreshOnUpdate()
+                return true
+            }
+            R.id.update_lead_scores -> {
+                FetchLeadScore().execute()
                 return true
             }
         }
@@ -207,6 +249,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         "addAgent" -> AddAgent().execute()
                         "newLeads" -> FetchNewLead().execute()
+                        "leadScore" -> FetchLeadScore().execute()
                     }
                 }
         snackbar.setActionTextColor(ContextCompat.getColor(baseContext, R.color.colorAccent))
@@ -812,12 +855,13 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             if (result!!){
-                if (updateStatus == "update"){
+                setViewPager()
+                /*if (updateStatus == "update"){
                     updateStatus = "noUpdate"
                     setViewPager()
                 } else {
                     FetchLeadScore().execute()
-                }
+                }*/
             } else {
                 progressDialog.dismiss()
             }
@@ -933,12 +977,13 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             if (result!!){
-                if (updateStatus == "update"){
+                setViewPager()
+                /*if (updateStatus == "update"){
                     updateStatus = "noUpdate"
                     setViewPager()
                 } else {
                     FetchLeadScore().execute()
-                }
+                }*/
             } else {
                 progressDialog.dismiss()
             }
@@ -950,7 +995,13 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("StaticFieldLeak")
     inner class FetchLeadScore : AsyncTask<Void, Void, Boolean>() {
 
-        val leads = ArrayList<LeadsDO>()
+        //val leads = ArrayList<LeadsDO>()
+
+        override fun onPreExecute() {
+            progressDialog.setMessage("Updating Lead Scores, please wait...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+        }
 
         @SuppressLint("SimpleDateFormat")
         override fun doInBackground(vararg p0: Void?): Boolean {
@@ -1003,8 +1054,12 @@ class MainActivity : AppCompatActivity() {
                                 fetchLead.leadScore = leadScore
                                 dynamoDBMapper.save(fetchLead)
                             }
-                            leads.add(fetchLead)
+                            //leads.add(fetchLead)
                         }
+
+                    } catch (e: AmazonClientException) {
+                        showSnackBar("Failed to update leads", "leadScore")
+                        return false
                     } catch (e: JSONException) {
                         e.printStackTrace()
                         return false
@@ -1027,12 +1082,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            leadsList.clear()
+            /*leadsList.clear()
             displayLeads.clear()
             for (i in 0 until leads.size){
                 leadsList.add(leads[i])
                 displayLeads.add(leads[i])
-            }
+            }*/
 
             return true
 
@@ -1041,10 +1096,13 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(result: Boolean?) {
             progressDialog.dismiss()
             if (result!!){
-                setViewPager()
+                Toast.makeText(baseContext, "Updated Lead Scores", Toast.LENGTH_LONG).show()
+                refreshOnUpdate()
+                //basicSnackBar("Refresh Leads To Get Updated Lead Scores")
+                //setViewPager()
             } else {
-                Toast.makeText(baseContext, "Failed to load leads", Toast.LENGTH_LONG).show()
-                showSnackBar("Failed to update leads", "newLeads")
+                //Toast.makeText(baseContext, "Failed to load leads", Toast.LENGTH_LONG).show()
+                //showSnackBar("Failed to update leads", "newLeads")
             }
         }
 
@@ -1140,15 +1198,19 @@ class MainActivity : AppCompatActivity() {
                     .awsConfiguration(AWSMobileClient.getInstance().configuration)
                     .build()
 
-            val leadIds = dynamoDBMapper.load(LeadIdsDO::class.java, Config.SAEMAIL , Config.SAPHONE)
-            if (leadIds != null){
-                existingLeadId = leadIds.leadId as ArrayList<String>
-            } else {
-                val leadIdList = LeadIdsDO()
-                leadIdList.emailId = Config.SAEMAIL
-                leadIdList.phone = Config.SAPHONE
-                leadIdList.leadId = existingLeadId
-                dynamoDBMapper.save(leadIdList)
+            try {
+                val leadIds = dynamoDBMapper.load(LeadIdsDO::class.java, Config.SAEMAIL , Config.SAPHONE)
+                if (leadIds != null){
+                    existingLeadId = leadIds.leadId as ArrayList<String>
+                } else {
+                    val leadIdList = LeadIdsDO()
+                    leadIdList.emailId = Config.SAEMAIL
+                    leadIdList.phone = Config.SAPHONE
+                    leadIdList.leadId = existingLeadId
+                    dynamoDBMapper.save(leadIdList)
+                }
+            } catch (e: AmazonClientException){
+                return false
             }
 
             val lsqURL = "https://api.leadsquared.com/v2/LeadManagement.svc/List.GetLeads?accessKey=${Config.LSACCESSKEY}&secretKey=${Config.LSSECRETKEY}&listId=${Config.EDUBEAMLISTID}"
@@ -1306,7 +1368,7 @@ class MainActivity : AppCompatActivity() {
                                 newLead.leadScore = jsonObject.getString("Score")
                                 newLead.name = jsonObject.getString("FirstName")
                                 val state = jsonObject.getString("mx_Select_Your_State")
-                                if (state != null){
+                                if (state != "null"){
                                     newLead.state = state
                                     newLead.assignedTo = states!![state]
                                 } else {
@@ -1318,7 +1380,7 @@ class MainActivity : AppCompatActivity() {
                                 newLead.leadId = newLeads[j]
 
                                 val customerType = jsonObject.getString("mx_I_would_like_to")
-                                if (customerType != null) {
+                                if (customerType != "null") {
                                     if (customerType.contains("New"))
                                         newLead.leadType = "New Preschool"
                                     else
@@ -1338,7 +1400,7 @@ class MainActivity : AppCompatActivity() {
 
                                 newLead.nfd = nfd
 
-                                if (createdOn.substring(0, 4) == "2018")
+                                if (Integer.parseInt(createdOn.substring(0, 4)) >= 2018)
                                     dynamoDBMapper.save(newLead)
                             }
                         } catch (e: JSONException) {
@@ -1380,7 +1442,12 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(result: Boolean?) {
             if (result!!){
                 //Toast.makeText(baseContext, "Found "+newLeads.size+" New Leads", Toast.LENGTH_LONG).show()
-                LeadDetails().execute()
+                //LeadDetails().execute()
+                if (adminEmail == Config.SAEMAIL) {
+                    LeadDetails().execute()
+                } else {
+                    LeadByAgentDetails().execute(adminName)
+                }
             } else {
                 progressDialog.dismiss()
                 Toast.makeText(baseContext, "Failed to update data", Toast.LENGTH_LONG).show()

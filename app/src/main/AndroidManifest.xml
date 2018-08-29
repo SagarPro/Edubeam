@@ -24,6 +24,13 @@
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".CustomerActivitiesActivity" />
+        <service
+            android:name=".service.FetchLeadScoreService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

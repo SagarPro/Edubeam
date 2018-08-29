@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.*
 import sagsaguz.edubeam.CustomerActivitiesActivity
 import sagsaguz.edubeam.R
-import sagsaguz.edubeam.utils.CustomerDetailsDO
 import sagsaguz.edubeam.adapter.UserListAdapter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,12 +26,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
-import com.amazonaws.services.dynamodbv2.model.ScanRequest
-import com.amazonaws.services.dynamodbv2.model.ScanResult
-import sagsaguz.edubeam.MainActivity
 import sagsaguz.edubeam.MainActivity.Companion.mainActivity
 import sagsaguz.edubeam.utils.AWSProvider
-import sagsaguz.edubeam.utils.Config
 import sagsaguz.edubeam.utils.LeadsDO
 
 class UsersList : Fragment() {
@@ -240,11 +235,7 @@ class UsersList : Fragment() {
                     .build()
 
             try {
-                val customer = CustomerDetailsDO()
-                customer.phone(userDetails.phone.toString())
-                customer.emailId(userDetails.emailId.toString())
-
-                dynamoDBMapper.delete(customer)
+                dynamoDBMapper.delete(userDetails)
                 return true
             } catch (e : AmazonClientException){
                 return false
@@ -252,6 +243,7 @@ class UsersList : Fragment() {
         }
 
         override fun onPostExecute(result: Boolean?) {
+            progressDialog.dismiss()
             if (result!!){
                 mainActivity!!.refreshOnUpdate()
             } else {

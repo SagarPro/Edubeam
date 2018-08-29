@@ -10,7 +10,6 @@ import android.widget.*
 import sagsaguz.edubeam.CustomerActivitiesActivity
 import sagsaguz.edubeam.R
 import sagsaguz.edubeam.adapter.UserListAdapter
-import sagsaguz.edubeam.utils.CustomerDetailsDO
 import sagsaguz.edubeam.utils.LeadsDO
 import java.text.SimpleDateFormat
 import java.util.*

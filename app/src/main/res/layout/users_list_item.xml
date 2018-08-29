@@ -150,6 +150,9 @@
             android:layout_marginStart="5dp"
             android:layout_below="@+id/tvAssignedTo"
             android:layout_toEndOf="@+id/state"
+            android:layout_toStartOf="@+id/tvLeadType"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:id="@+id/tvState"/>
 
         <TextView

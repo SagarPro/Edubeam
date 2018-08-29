@@ -115,7 +115,7 @@ class NewList : Fragment() {
                     dialog3.dismiss()
                     dialog2.dismiss()
                     dialog.dismiss()
-                    selLeadType = "New Customer"
+                    selLeadType = "New Preschool"
                     UpdateCustomerDetails().execute(customer)
                 }
                 val tvNo1 = dialog3.findViewById<TextView>(R.id.tvNo)
@@ -124,7 +124,7 @@ class NewList : Fragment() {
                     dialog3.dismiss()
                     dialog2.dismiss()
                     dialog.dismiss()
-                    selLeadType = "Upgrade Customer"
+                    selLeadType = "Upgrade Preschool"
                     UpdateCustomerDetails().execute(customer)
                 }
                 dialog3.show()
